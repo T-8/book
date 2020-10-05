@@ -18,6 +18,10 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
+    return view('index');
+});
+
+Route::get('/mybook', function () {
     $books = Book::all();
     return view('books', ['books' => $books]);
 })->middleware('auth');
@@ -37,13 +41,17 @@ Route::post('/book',function(Request $request){
   $book = new Book;
   $book->title = $request->name;
   $book->save();
-  return redirect('/');
+  return redirect('/mybook');
 });
 
 Route::delete('/book/{book}',function(Book $book){
   $book->delete();
-  return redirect('/');
+  return redirect('/mybook');
 });
+
+Route::get('/mypage', function () {
+  return view('mypage');
+})->middleware('auth');
 
 Auth::routes();
 
